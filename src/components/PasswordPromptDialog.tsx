@@ -80,7 +80,7 @@ const PasswordPromptDialog: React.FC = () => {
       </form>
       {passwordIncorrect && (
         <p className="text-red-500 text-center">
-          Password incorrect. <p className="italic">Try writing 'msweb'.</p>
+          Password incorrect. <p className="italic">Try writing msweb.</p>
         </p>
       )}
     </div>
