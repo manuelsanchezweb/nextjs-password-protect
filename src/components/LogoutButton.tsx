@@ -5,8 +5,6 @@ import React from 'react'
 
 export const handleLogout = async () => {
   cookies().delete(process.env.PASSWORD_COOKIE_NAME!)
-
-  return new Response(null, { status: 200 })
 }
 
 const LogoutButton = () => {

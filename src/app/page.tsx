@@ -15,9 +15,12 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-12 p-24">
-      This is secret content actually. You knew the password!!!
-      <Image src={img} alt="Manu" width={300} height={300} />
+    <main className="flex min-h-screen flex-col text-center items-center justify-center gap-12 p-24">
+      <h1 className="text-2xl md:text-4xl font-bold">
+        {' '}
+        This is the secret content
+      </h1>
+      <Image src={img} alt="Manu" width={200} height={200} />
       <LogoutButton />
     </main>
   )

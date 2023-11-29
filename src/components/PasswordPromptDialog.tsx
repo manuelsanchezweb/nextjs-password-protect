@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, useCallback } from 'react'
+import { IconEyeOff, IconEyeOn } from './Icons'
 
 /**
  * This component renders a dialog for password input.
@@ -8,6 +9,7 @@ import React, { useState, FormEvent } from 'react'
  */
 const PasswordPromptDialog: React.FC = () => {
   const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false) // New state for toggling visibility
   const [passwordIncorrect, setPasswordIncorrect] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -33,20 +35,39 @@ const PasswordPromptDialog: React.FC = () => {
     onSubmit(e)
   }
 
+  const togglePasswordVisibility = useCallback(() => {
+    setPasswordVisible(!passwordVisible)
+  }, [passwordVisible])
+
   return (
     <div className="min-h-screen grid place-content-center">
+      <div className="text-center flex flex-col gap-2">
+        <h1 className="text-2xl md:text-4xl font-bold">
+          Nextjs 14 Template Password Protected
+        </h1>
+      </div>
+
       <form
         className="flex flex-col items-center gap-4 my-12"
         onSubmit={handleSubmit}
       >
         <label htmlFor="password">Insert Password:</label>
-        <input
-          className="p-2"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="relative">
+          <input
+            className="p-2"
+            type={passwordVisible ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 pr-1 flex justify-center items-center text-sm leading-5 text-black"
+            onClick={() => togglePasswordVisibility()}
+          >
+            {passwordVisible ? <IconEyeOn /> : <IconEyeOff />}
+          </button>
+        </div>
         <button
           disabled={loading}
           className={`border border-white hover:bg-gray-200 focus-visible:bg-gray-200 hover:text-black focus-visible:text-black rounded-md px-4 py-2
@@ -58,7 +79,9 @@ const PasswordPromptDialog: React.FC = () => {
         </button>
       </form>
       {passwordIncorrect && (
-        <p className="text-red-500">Password incorrect, please try again.</p>
+        <p className="text-red-500 text-center">
+          Password incorrect. <p className="italic">Try writing 'msweb'.</p>
+        </p>
       )}
     </div>
   )
